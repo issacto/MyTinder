@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-tinder-dev-123444-authRole",
+            "UnauthRoleArn": "arn:aws:iam::692143788284:role/amplify-tinder-dev-123444-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::692143788284:role/amplify-tinder-dev-123444-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-tinder-dev-123444-deployment",
+            "UnauthRoleName": "amplify-tinder-dev-123444-unauthRole",
+            "StackName": "amplify-tinder-dev-123444",
+            "StackId": "arn:aws:cloudformation:eu-west-1:692143788284:stack/amplify-tinder-dev-123444/fa00be10-e9b0-11ea-b56f-0a9b71aae734",
+            "AmplifyAppId": "dfjpbuajw1rz4"
+        },
+        "categories": {
+            "auth": {
+                "tinderd19bad44": {}
+            }
+        }
+    }
+}

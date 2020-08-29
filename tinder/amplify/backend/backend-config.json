@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"tinderd19bad44": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
