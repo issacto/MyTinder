@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 
+
 // color constants
 export const accent = '#ED6640';
 export const bgColor = '#E0E0E0';
+export const bgRootcolor='#1a1a2e';
 export const black = '#131313';
 export const white = '#F7F7FF';
 
@@ -21,17 +23,18 @@ export const styles = StyleSheet.create({
         backgroundColor: white,
         borderRadius: 30,
         elevation: 10,
-        height: 30,
+        height: 35,
         justifyContent: 'center',
-        margin: 5,
+        margin: 10,
         width: 200,
     },  
     screen: {
         alignItems: 'center',
-        backgroundColor: bgColor,
+        backgroundColor: bgRootcolor,
         flex: 1,
         justifyContent: 'center',
-    }
+    },
+    
 });
 
 // screen styles

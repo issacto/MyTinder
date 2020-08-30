@@ -11,7 +11,6 @@ class settingsScreen extends React.Component {
     render() {
         return (
             <View style={styles.screen}>
-                <Text>settings screen</Text>
                 <TouchableOpacity
                     onPress={() => store.dispatch(updateAuth({ loggedin: false }))}
                     style={styles.defaultBtn}

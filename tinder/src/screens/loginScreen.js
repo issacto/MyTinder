@@ -29,21 +29,24 @@ class loginScreen extends React.Component {
     render() {
         return (
             <View style={styles.screen}>
-                <TextInput
+                <Text style={{fontSize:40,  marginBottom: 25, color: 'white'}}>Welcome Back!</Text>
+
+                <TextInput style={{fontSize:20,color: 'white'}}
                 onChangeText={
                     // Set this.state.email to the value in this Input box
                     (value) => this.setState({ email: value })
                 }
-                placeholder="my@email.com"
+                placeholder="Email"
+                placeholderTextColor="white" 
                 />
-                <TextInput
+                <TextInput style={{fontSize:20, color: 'white'}}
                 onChangeText={
                     // Set this.state.email to the value in this Input box
                     (value) => this.setState({ password: value })
                 }
-                placeholder="aA1!aA1!"
+                placeholder="Password"
+                placeholderTextColor="white" 
                 />
-                <Text>login screen</Text>
                 <TouchableOpacity
                     //onPress={() => store.dispatch(updateAuth({loggedin: true}))}
                     onPress={() => this.handleSignIn() }
@@ -57,6 +60,13 @@ class loginScreen extends React.Component {
                 >
                     <Text style={styles.centerText}>Register</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.defaultBtn}
+                onPress={() => this.props.navigation.navigate('ResetPassword')}
+                //onPress={ this.handleForgotPassword }
+                > 
+                <Text style={styles.centerText}>Fogot Password</Text>
+                </TouchableOpacity>
+                
             </View>
         )
     }

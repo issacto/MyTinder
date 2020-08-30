@@ -1,25 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, Modal, TextInput,Button } from 'react-native';
+import { StyleSheet, Text, View, Modal, TextInput,TouchableOpacity } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { store } from '../redux/store';
+import { styles } from '../styles';
 import { updateAuth } from '../redux/action';
+import firebase from '../firebase.js';
 
 export default class registerScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'ulovedating@gmail.com',
-      password: '',
-      confirmPassword: '',
+      email: 'kinwaitoissac@gmail.com',
+      password: 'aA1!aA1!',
+      confirmPassword: 'aA1!aA1!',
       confirmationCode: '',
       modalVisible: false,
-      forgotModalVisible: false,
-      confirmationForgotCode:'',
-      ForgotGeneratedPpassword:''
     };
   }
 
   handleSignUp = () => {
+    // ".", "#", "$", "[", or "]"] cannnot
     // alert(JSON.stringify(this.state));
     const { email, password, confirmPassword } = this.state;
     // Make sure passwords match
@@ -46,71 +46,78 @@ export default class registerScreen extends React.Component {
   }
   handleConfirmationCode = () => {
     const { email, confirmationCode } = this.state;
+
+    
     Auth.confirmSignUp(email,confirmationCode)
       .then(() => {
-        //Tim please work on this! I dun kn how to fix this. ITs not working
-        store.dispatch(updateAuth({loggedin: true}));
+      var timeRegistered = new Date().getSeconds();
+      var name = email.split(".")[0]
+      console.log(name)
+      var usersRef = firebase.database().ref("users/"  + name);
+      //set up the account for the person
+      usersRef.set({username: email, 
+        registeredtime:timeRegistered, 
+        peopleNotSwiped:{}, 
+        peopleSwiped:{} })
+      //add this person to all the others
+      var rootRef = firebase.database().ref().child("users");
+      rootRef.once("value", function(snapshot) {
+        snapshot.forEach(function(child) {
+          if (child.key !== name){
+            firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name});
+          }
+          console.log(child.key);
+        });
+      });
+      
+      store.dispatch(updateAuth({loggedin: true}));
         
       })
       .catch(err => console.log(err));
   }
 
-  handleForgotPassword =() =>{
-    const { email } = this.state;
-    Auth.forgotPassword(email)
-    .then(data => this.setState({ forgotModalVisible: true }))
-    .catch(err => console.log(err));
-  }
-
-  handleConfirmedForgotPassword =() =>{
-    const { email, confirmationForgotCode, ForgotGeneratedPpassword } = this.state;
-    Auth.forgotPasswordSubmit(email, confirmationForgotCode, ForgotGeneratedPpassword)
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-  }
-
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Welcome to MyAlligatorFace!</Text>
+      <View style={styles.screen}>
         
-        <TextInput
+        <TextInput style={{fontSize:20, color: 'white'}}
           onChangeText={
             // Set this.state.email to the value in this Input box
             (value) => this.setState({ email: value })
           }
           placeholder="my@email.com"
+          placeholderTextColor="white" 
         />
-        <TextInput
+        <TextInput style={{fontSize:20, color: 'white'}}
           onChangeText={
             // Set this.state.email to the value in this Input box
             (value) => this.setState({ password: value })
           }
           placeholder="p@ssw0rd123"
+          placeholderTextColor="white" 
           secureTextEntry
         />
-        <TextInput
+        <TextInput style={{fontSize:20, color: 'white'}}
           onChangeText={
             // Set this.state.email to the value in this Input box
             (value) => this.setState({ confirmPassword: value })
           }
           placeholder="p@ssw0rd123"
+          placeholderTextColor="white" 
           secureTextEntry
         />
-        <Button
-          title='Submit'
-          onPress={ this.handleSignUp }
-        />
-         <Button
-          title='Forget Password'
-          onPress={ this.handleForgotPassword }
-        />
+
+        <TouchableOpacity style={styles.defaultBtn } 
+          onPress={ this.handleSignUp }>
+          <Text style={styles.centerText}>Submit</Text>
+          </TouchableOpacity>
+         
         <Modal
           visible={this.state.modalVisible}
         >
           <View
-            style={styles.container}
+            style={internalStyles.container}
           >
             <TextInput
               onChangeText={
@@ -120,48 +127,20 @@ export default class registerScreen extends React.Component {
               }
               placeholder="confirmationcode"
             />
-            <Button
+            <TouchableOpacity style={styles.defaultBtn}
               title='Submit'
-              onPress={ this.handleConfirmationCode }
-            />
+              onPress={ this.handleConfirmationCode }>
+              <Text style={styles.centerText}>Log in</Text>
+              </TouchableOpacity>
           </View>
         </Modal>
 
-        <Modal
-          visible={this.state.forgotModalVisible}
-        >
-          <View
-            style={styles.container}
-          >
-            
-            <TextInput
-              onChangeText={
-                // Set this.state.confirmationCode to the value in this Input box
-                (value) => this.setState({ confirmationForgotCode: value })
-                
-              }
-              placeholder="confirmation code"
-            />
-            <TextInput
-              onChangeText={
-                // Set this.state.confirmationCode to the value in this Input box
-                (value) => this.setState({ ForgotGeneratedPpassword: value })
-                
-              }
-              placeholder="new password"
-            />
-            <Button
-              title='Submit'
-              onPress={ this.handleConfirmedForgotPassword }
-            />
-          </View>
-        </Modal>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const internalStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',

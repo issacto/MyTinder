@@ -12,9 +12,10 @@ import contactScreen from '../screens/contactScreen';
 import loginScreen from '../screens/loginScreen';
 import profileScreen from '../screens/profileScreen';
 import registerScreen from '../screens/registerScreen';
+import resetPasswordScreen from '../screens/resetPasswordScreen.js';
 import settingsScreen from '../screens/settingsScreen';
 import swipeScreen from '../screens/swipeScreen';
-import { accent, bgColor, black, defaultStyles } from '../styles'
+import { accent, bgRootcolor, bgColor, black, defaultStyles } from '../styles'
 
 const Chat = createStackNavigator();
 const Root = createStackNavigator();
@@ -40,12 +41,12 @@ const main = () => {
                         case 'Profile':
                             iconName = focused ? 'account-circle' : 'account-circle-outline';
                             break;
-                        case 'Chat':
-                            iconName = focused ? 'message-processing' : 'message-processing-outline';
-                            break;
                         case 'Swipe':
                             iconName = 'gesture-swipe'
                             break;
+                        case 'Chat':
+                            iconName = focused ? 'message-processing' : 'message-processing-outline';
+                            break;    
                         case 'Settings':
                             iconName = focused ? 'dots-horizontal-circle' : 'dots-horizontal-circle-outline';
                             break;
@@ -64,8 +65,8 @@ const main = () => {
             }}
         >
             <Main.Screen name='Profile' component={profileScreen} />
-            <Main.Screen name='Chat' component={chat} />
             <Main.Screen name='Swipe' component={swipeScreen} />
+            <Main.Screen name='Chat' component={chat} />
             <Main.Screen name='Settings' component={settingsScreen} />
         </Main.Navigator>
     )
@@ -95,6 +96,8 @@ class AppNav extends React.Component {
                             <>
                                 <Root.Screen name='Login' component={loginScreen} />
                                 <Root.Screen name='Register' component={registerScreen} />
+                                <Root.Screen name= 'ResetPassword' component={resetPasswordScreen} />
+                                
                             </>
                         ) : (
                                 <Root.Screen name='Main' component={main} />
