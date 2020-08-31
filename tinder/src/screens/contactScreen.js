@@ -1,24 +1,76 @@
 import React from 'react';
-import { Text, StyleSheet, Dimensions, TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet,ImageBackground ,Dimensions, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-
+import firebase from '../firebase.js';
 import { styles } from '../styles';
 
-class contactScreen extends React.Component {
 
+
+class contactScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        
+        };
+        UNSAFE_componentWillMount(){
+            this.getPeople();
+        }
+
+        state = {
+            email: "kinwaitoissac@gmail",
+            matchedPeople: [],
+            dataReady: false,
+         };
+
+        getPeople ()  {
+        var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleNotSwiped');
+        
+        rootRef.once('value', (snapshot) => {
+            if (snapshot.exists()){
+            var something = snapshot.val();
+            console.log(something);
+            var somethingiven = Object.values(something)
+            somethingiven.map((abc)=>{
+                var somethinginside = Object.values(abc)[0]
+                var joined = this.state.matchedPeople.concat(somethinginside)
+                this.state.matchedPeople = joined;
+                console.log("dsfgfgs"+this.state.matchedPeople)
+                
+            });
+            /*
+            something.map((matchedPerson) => (
+                this.state.matchedPeople.push(Object.keys(something)))); */
+            this.setState({dataReady: true})
+            
+            
+            }
+        })
+
+        ;
+        
+    }
+    
+    
     render() {
+        {console.log(this.state.matchedPeople)}
+        const boxes = this.state.matchedPeople.map((matchedPerson) => 
+        {
+            return(
+            <TouchableOpacity onPress={ ()=>
+            this.props.navigation.navigate('Chat')}
+            style={internalStyles.individualchatbox }>
+            <Text style= {styles.centerText}>{matchedPerson}</Text>
+            </TouchableOpacity> 
+            )}) 
+        
+        const normalsettings =  <ImageBackground style={internalStyles.chatbox} >{boxes}</ImageBackground>
+
         return (
             <View style={styles.screen}>
-                <Text style={{fontSize:20, margin: 15, color: 'white'}}>Contact screen</Text>
-                <View style ={internalStyles.chatbox}>
                 
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Chat')}
-                    style={internalStyles.individualchatbox}
-                >
-                <Text style={styles.centerText}>Go Chat with </Text>
-                </TouchableOpacity>
-                </View>
+             <Text style={{fontSize:20, margin: 15, color: 'white'}}>Contact</Text>
+             {this.state.dataReady ?  normalsettings: null}
+             
             </View>
         )
     }
@@ -37,10 +89,10 @@ const internalStyles= StyleSheet.create({
         borderRadius: 5,
         elevation: 10,
         height: 40,
+        textAlign: 'center',
         justifyContent: 'center',
         margin: 10,
-        width: 200,
-        width: win.width/1.1,
+        width: win.width/1.2,
 
     },
 

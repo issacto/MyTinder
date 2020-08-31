@@ -12,14 +12,9 @@ class swipeScreen extends React.Component {
         return (
             <View style={styles.screen}>
                 <Text style={{fontSize:20, margin: 15, color: 'white'}}>Match</Text>
-                <ImageBackground source={require('../ourking.jpg')} style={internalStyles.backgroundImage} >
+                <ImageBackground style={internalStyles.backgroundImage} >
                 <Swipe/>
                 </ImageBackground>
-                <View style ={internalStyles.bottomlinestyle} >
-                <Text style={{color: "white"}}> No more suitable match </Text>
-                <Text style={{color: "white"}}>May the King be with you!</Text>
-
-                </View>
             </View>
         )
     }

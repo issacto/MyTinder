@@ -53,14 +53,21 @@ export default class registerScreen extends React.Component {
       var timeRegistered = new Date().getSeconds();
       var name = email.split(".")[0]
       console.log(name)
-      var usersRef = firebase.database().ref("users/"  + name);
+      var userRef = firebase.database().ref("users/"  + name);
       //set up the account for the person
-      usersRef.set({username: email, 
+      userRef.set({username: email, 
         registeredtime:timeRegistered, 
         peopleNotSwiped:{}, 
-        peopleSwiped:{} })
+        peopleSwiped:{}});
+        var rootRef = firebase.database().ref().child("users");
+        rootRef.once("value", function(snapshot) {
+          snapshot.forEach(function(child) {
+            if (child.key !== name){
+              userRef.child("peopleNotSwiped").push({name: child.key});
+            }
+          });
+        }); 
       //add this person to all the others
-      var rootRef = firebase.database().ref().child("users");
       rootRef.once("value", function(snapshot) {
         snapshot.forEach(function(child) {
           if (child.key !== name){
@@ -68,7 +75,8 @@ export default class registerScreen extends React.Component {
           }
           console.log(child.key);
         });
-      });
+      }
+      );
       
       store.dispatch(updateAuth({loggedin: true}));
         
