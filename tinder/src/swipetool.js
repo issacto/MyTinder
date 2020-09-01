@@ -52,51 +52,173 @@ export default class Swipe extends Component{
       uriReady:false,
 
    }
-        fetchData(){
+          async fetchData(){
           var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleNotSwiped');
           
-          rootRef.once('value', (snapshot) => {
+          rootRef.once('value',async (snapshot) => {
               if (snapshot.exists()){
-              var something = snapshot.val();
+              var something =  snapshot.val();
               console.log(something);
-              var somethingiven = Object.values(something)
-              somethingiven.map((abc)=>{
+              var somethingiven = Object.values(something);
+              await Promise.all( somethingiven.map(async abc =>{
                   var somethinginside = Object.values(abc)[0];
-                  var photoUri = this.geturi(somethinginside)
+                  let photoUri = await this.geturi(somethinginside);
                   console.log("photourl fakejb bfaeobfaejo: "+ photoUri)
                   var joined = this.state.data.concat({name: somethinginside, uri: {uri:photoUri }});
+                  
                   // this.geturi(somethinginside)
                   //uri: {uri: urilink} 
                   //uri:this.geturi(somethinginside)
                   this.setState({data: joined });
+                  
                   console.log(this.state.data)
                   //console.log("dsfgfgs"+this.geturi(somethinginside));
                   
-              })}})
+              })).then(users => {console.log("Aegaegaegaeggeaagegeagae"+this.state.data),
               this.setState({uriReady:true})}
+                )
+              
+              
+            }})
+            
           
-             geturi(name1) {
-                  let imageRef = firebase.storage().ref("Usersimage/"+name1);
-                  var isDone = false;
-                   imageRef.getDownloadURL().then((url) => {
-                    console.log(url);
-                      //from url you can fetched the uploaded image easily
-                      isDone = true;
-                      return url;
+          }
+          
+              async geturi(name1) {
+                var isDone = false;
+                try{
+
+                  let url = await firebase.storage().ref("Usersimage/"+name1).getDownloadURL();
+                  isDone = true;
+                  console.log("HERE we GO 1: "+ url);
+                  return url;
                       
                       
-                    }).catch((e) => console.log('getting downloadURL of image error => ', e.message));
+                }catch(e) {console.log('getting downloadURL of image error => ', e.message);
                     if(isDone!==true){
-                    let newImageRef = firebase.storage().ref("Usersimage/"+'11.png');
-                    newImageRef.getDownloadURL().then((url) => {
+                    let newImageRef = await firebase.storage().ref("Usersimage/"+'background.jpg').getDownloadURL();
+                     /*newImageRef.getDownloadURL().then((url) => {
                       console.log('hiaeh riubrifaejbofobebirb;');
                         //from url you can fetched the uploaded image easily
-                        return 'https://firebasestorage.googleapis.com/v0/b/ulove-903e0.appspot.com/o/Usersimage%2F11.png?alt=media&token=57ba5897-204f-4a8d-a049-1142a73e995f'
-                        ;})}
-              }         
+                        url = 'https://firebasestorage.googleapis.com/v0/b/ulove-903e0.appspot.com/o/Usersimage%2F11.png?alt=media&token=57ba5897-204f-4a8d-a049-1142a73e995f'
+                        return url*/
+                        console.log("HERE we GO 2: "+ newImageRef);
+                        return newImageRef
+                        ;}
+              }  }       
 
         
     normalsettings = this.state.data.map((item, i) => {
+      console.log("11111aaa")
+      
+      if (i < this.state.currentIndex) {
+        return null;
+      } else if (i == this.state.currentIndex) {
+        return (
+          
+          <Animated.View
+          {...this.PanResponder.panHandlers}
+          key={i}
+          style={[
+          this.rotateAndTranslate,
+          {
+              height: SCREEN_HEIGHT - 120,
+              width: SCREEN_WIDTH,
+              padding: 10,
+              position: "absolute"
+          }
+          ]}
+      >
+             <Animated.View
+                  style={{
+                  opacity: this.likeOpacity,
+                  transform: [{ rotate: "-30deg" }],
+                  position: "absolute",
+                  top: 50,
+                  left: 40,
+                  zIndex: 1000
+                  }}
+              >
+                  <Text
+                  style={{
+                      borderWidth: 1,
+                      borderColor: "green",
+                      color: "green",
+                      fontSize: 32,
+                      fontWeight: "800",
+                      padding: 10
+                  }}
+                  >
+                  LIKE
+                  </Text>
+              </Animated.View>
+
+              <Animated.View
+                  style={{ 
+                  opacity: this.nopeOpacity,
+                  transform: [{ rotate: "30deg" }],
+                  position: "absolute",
+                  top: 50,
+                  right: 40,
+                  zIndex: 1000
+                  }}
+              >
+                  <Text
+                  style={{
+                      borderWidth: 1,
+                      borderColor: "red",
+                      color: "red",
+                      fontSize: 32,
+                      fontWeight: "800",
+                      padding: 10
+                  }}
+                  >
+                  NOPE
+                  </Text>
+              </Animated.View>
+          <Image
+          style={{
+              flex: 1,
+              height: null,
+              width: null,
+              resizeMode: "cover",
+              borderRadius: 20
+          }}
+          source={item.uri}
+          />
+      </Animated.View>);
+      }else {
+        return (
+          <Animated.View
+              key={item.id} style={[{
+              opacity: this.nextCardOpacity,
+              transform: [{ scale: this.nextCardScale }],
+              height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
+              }]
+          }>
+            <Image
+              style={{
+                flex: 1,
+                height: null,
+                width: null,
+                resizeMode: "cover",
+                borderRadius: 20
+              }}
+              source={item.uri}
+            />
+          </Animated.View>
+        );
+      }
+    }).reverse(); 
+
+  
+    
+    render(){
+      return(
+        <View>
+      {this.state.uriReady ? (this.state.data.map((item, i) => {
+      console.log("11111aaa")
+      
       if (i < this.state.currentIndex) {
         return null;
       } else if (i == this.state.currentIndex) {
@@ -194,14 +316,7 @@ export default class Swipe extends Component{
           </Animated.View>
         );
       }
-    }).reverse();
-
-  
-    
-    render(){
-      return(
-        <View>
-      {this.state.uriReady ?  normalsettings: null}
+    }).reverse()): <Text style={{color:'white'}}>Loading.....</Text>}
       </View>
       )}
 
@@ -222,6 +337,7 @@ export default class Swipe extends Component{
                       this.position.setValue({ x: 0, y: 0 })
                     })
                   })
+                //add here
                 } else if (gestureState.dx < -120) {
                   Animated.spring(this.position, {
                     toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
@@ -231,6 +347,7 @@ export default class Swipe extends Component{
                       this.position.setValue({ x: 0, y: 0 })
                     })
                   })
+                  //add here
                 }
 
                 else {
