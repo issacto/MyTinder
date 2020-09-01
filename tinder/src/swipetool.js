@@ -47,12 +47,14 @@ export default class Swipe extends Component{
   }
     state = {
       currentIndex: 0,
-      email:"kinwaitoissac@gmail",
+      email:"tototototoman@gmail",
       data: [],
       uriReady:false,
+      swipedEmail:''
 
    }
           async fetchData(){
+          //firebase.database().ref("users/peopleNotSwiped"  + this.state.email).push({name: "tototototoman@gmail"});
           var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleNotSwiped');
           
           rootRef.once('value',async (snapshot) => {
@@ -66,9 +68,6 @@ export default class Swipe extends Component{
                   console.log("photourl fakejb bfaeobfaejo: "+ photoUri)
                   var joined = this.state.data.concat({name: somethinginside, uri: {uri:photoUri }});
                   
-                  // this.geturi(somethinginside)
-                  //uri: {uri: urilink} 
-                  //uri:this.geturi(somethinginside)
                   this.setState({data: joined });
                   
                   console.log(this.state.data)
@@ -108,108 +107,6 @@ export default class Swipe extends Component{
               }  }       
 
         
-    normalsettings = this.state.data.map((item, i) => {
-      console.log("11111aaa")
-      
-      if (i < this.state.currentIndex) {
-        return null;
-      } else if (i == this.state.currentIndex) {
-        return (
-          
-          <Animated.View
-          {...this.PanResponder.panHandlers}
-          key={i}
-          style={[
-          this.rotateAndTranslate,
-          {
-              height: SCREEN_HEIGHT - 120,
-              width: SCREEN_WIDTH,
-              padding: 10,
-              position: "absolute"
-          }
-          ]}
-      >
-             <Animated.View
-                  style={{
-                  opacity: this.likeOpacity,
-                  transform: [{ rotate: "-30deg" }],
-                  position: "absolute",
-                  top: 50,
-                  left: 40,
-                  zIndex: 1000
-                  }}
-              >
-                  <Text
-                  style={{
-                      borderWidth: 1,
-                      borderColor: "green",
-                      color: "green",
-                      fontSize: 32,
-                      fontWeight: "800",
-                      padding: 10
-                  }}
-                  >
-                  LIKE
-                  </Text>
-              </Animated.View>
-
-              <Animated.View
-                  style={{ 
-                  opacity: this.nopeOpacity,
-                  transform: [{ rotate: "30deg" }],
-                  position: "absolute",
-                  top: 50,
-                  right: 40,
-                  zIndex: 1000
-                  }}
-              >
-                  <Text
-                  style={{
-                      borderWidth: 1,
-                      borderColor: "red",
-                      color: "red",
-                      fontSize: 32,
-                      fontWeight: "800",
-                      padding: 10
-                  }}
-                  >
-                  NOPE
-                  </Text>
-              </Animated.View>
-          <Image
-          style={{
-              flex: 1,
-              height: null,
-              width: null,
-              resizeMode: "cover",
-              borderRadius: 20
-          }}
-          source={item.uri}
-          />
-      </Animated.View>);
-      }else {
-        return (
-          <Animated.View
-              key={item.id} style={[{
-              opacity: this.nextCardOpacity,
-              transform: [{ scale: this.nextCardScale }],
-              height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
-              }]
-          }>
-            <Image
-              style={{
-                flex: 1,
-                height: null,
-                width: null,
-                resizeMode: "cover",
-                borderRadius: 20
-              }}
-              source={item.uri}
-            />
-          </Animated.View>
-        );
-      }
-    }).reverse(); 
 
   
     
@@ -217,11 +114,12 @@ export default class Swipe extends Component{
       return(
         <View>
       {this.state.uriReady ? (this.state.data.map((item, i) => {
-      console.log("11111aaa")
-      
       if (i < this.state.currentIndex) {
         return null;
       } else if (i == this.state.currentIndex) {
+        console.log('y');
+        this.state.swipedEmail = item.name;
+        console.log(this.state.swipedEmail );
         return (
           <Animated.View
           {...this.PanResponder.panHandlers}
@@ -316,7 +214,7 @@ export default class Swipe extends Component{
           </Animated.View>
         );
       }
-    }).reverse()): <Text style={{color:'white'}}>Loading.....</Text>}
+    }).reverse()) : <Text style={{color:'white'}}>Loading.....</Text>}
       </View>
       )}
 
@@ -337,7 +235,69 @@ export default class Swipe extends Component{
                       this.position.setValue({ x: 0, y: 0 })
                     })
                   })
-                //add here
+                //->自己  swiped people 1 , ->1,2Matchedpeople,1 notswiped bye
+                //notswiped bye
+                var rootRef = firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped');
+                rootRef.once('value', (snapshot) => {
+                    if (snapshot.exists()){
+                    var newPeopleNotSwiped = [];
+                    var something = snapshot.val();
+                    console.log(something);
+                    var somethingiven = Object.values(something)
+                    somethingiven.map((abc)=>{
+                        var somethinginside = Object.values(abc)[0]
+                        if(somethinginside!=this.state.swipedEmail){
+                        var joined = newPeopleNotSwiped.concat(somethinginside)
+                        newPeopleNotSwiped = joined;
+                        
+                        }
+                        
+                    });
+                    firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped').set(newPeopleNotSwiped);
+                    console.log("dsfgfgs"+this.state.matchedPeople)
+                  }})
+                //->自己  swiped people 1 
+                var rootRef = firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped');
+                rootRef.once('value', (snapshot) => {
+                    if (snapshot.exists()){
+                    var newPeopleNotSwiped = [];
+                    var something = snapshot.val();
+                    console.log(something);
+                    var somethingiven = Object.values(something)
+                    somethingiven.map((abc)=>{
+                        var somethinginside = Object.values(abc)[0]
+                        if(somethinginside!=this.state.swipedEmail){
+                        var joined = newPeopleNotSwiped.concat(somethinginside)
+                        newPeopleNotSwiped = joined;
+                        
+                        }
+                        
+                    });
+                    firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped').set(newPeopleNotSwiped);
+                    console.log("dsfgfgs"+this.state.matchedPeople)
+                  }})
+                firebase.database().ref('users/' + this.state.email +"/peopleISwiped").push(this.state.swipedEmail);
+                // ]others got liked
+                firebase.database().ref('users/' + this.state.swipedEmail +"/PeopleSwipedU").push(this.state.email);
+                //->1,2Matchedpeople, 
+                // Your matched
+                var rootRef = firebase.database().ref('users/'+this.state.email +'/PeopleSwipedU');
+                rootRef.once('value', (snapshot) => {
+                    if (snapshot.exists()){
+                    var something = snapshot.val();
+                    var somethingiven = Object.values(something)
+                    somethingiven.map((abc)=>{
+                        console.log("AAAAA"+ abc)
+                        console.log("BBBBB"+ this.state.swipedEmail)
+                        if(abc==this.state.swipedEmail){
+                          firebase.database().ref('users/'+this.state.email+'/peopleMatched').push({name:this.state.swipedEmail});
+                          firebase.database().ref('users/'+this.state.swipedEmail+'/peopleMatched').push({name:this.state.email});
+                        }
+                    });
+                  }})
+
+                
+
                 } else if (gestureState.dx < -120) {
                   Animated.spring(this.position, {
                     toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
@@ -347,7 +307,27 @@ export default class Swipe extends Component{
                       this.position.setValue({ x: 0, y: 0 })
                     })
                   })
-                  //add here
+                  //notswiped bye
+                var rootRef = firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped');
+                rootRef.once('value', (snapshot) => {
+                    if (snapshot.exists()){
+                    var newPeopleNotSwiped = [];
+                    var something = snapshot.val();
+                    console.log(something);
+                    var somethingiven = Object.values(something)
+                    somethingiven.map((abc)=>{
+                        var somethinginside = Object.values(abc)[0]
+                        if(somethinginside!=this.state.swipedEmail){
+                        var joined = newPeopleNotSwiped.concat(somethinginside)
+                        newPeopleNotSwiped = joined;
+                        
+                        }
+                        
+                    });
+                    firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped').set(newPeopleNotSwiped);
+                    console.log("dsfgfgs"+this.state.matchedPeople)
+                  }})
+
                 }
 
                 else {

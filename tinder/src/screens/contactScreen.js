@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet,ImageBackground ,Dimensions, TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet,ImageBackground ,Dimensions, ScrollView,TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from '../firebase.js';
 import { styles } from '../styles';
@@ -17,16 +17,17 @@ class contactScreen extends React.Component {
         }
 
         state = {
-            email: "kinwaitoissac@gmail",
+            email: "tototototoman@gmail",
             matchedPeople: [],
             dataReady: false,
          };
 
         getPeople ()  {
-        var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleNotSwiped');
+        var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleMatched');
         
         rootRef.once('value', (snapshot) => {
             if (snapshot.exists()){
+                console.log("here")
             var something = snapshot.val();
             console.log(something);
             var somethingiven = Object.values(something)
@@ -63,7 +64,7 @@ class contactScreen extends React.Component {
             </TouchableOpacity> 
             )}) 
         
-        const normalsettings =  <ImageBackground style={internalStyles.chatbox} >{boxes}</ImageBackground>
+        const normalsettings =  <ScrollView><ImageBackground style={internalStyles.chatbox} >{boxes}</ImageBackground></ScrollView>
 
         return (
             <View style={styles.screen}>
