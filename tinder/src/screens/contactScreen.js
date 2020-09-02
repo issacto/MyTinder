@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet,ImageBackground ,Dimensions, ScrollView,TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet,ImageBackground , Image,Dimensions, ScrollView,TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from '../firebase.js';
 import { styles } from '../styles';
@@ -20,7 +20,12 @@ class contactScreen extends React.Component {
             
             matchedPeople: [],
             dataReady: false,
-            email:this.props.name
+            email:this.props.name,
+            uriReady : false,
+            tempUrl: '',
+            response: null,
+
+
          };
 
         getPeople ()  {
@@ -51,6 +56,8 @@ class contactScreen extends React.Component {
         ;
         
     }
+
+    
     
     
     render() {
@@ -60,23 +67,37 @@ class contactScreen extends React.Component {
         this.state.email = name;  
         console.log("bhuvgyccv"+this.state.email)*/
         {console.log(this.state.matchedPeople)}
-        const boxes = this.state.matchedPeople.map((matchedPerson) => 
-        {
-            return(
-            <TouchableOpacity onPress={ ()=>
-            this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
-            style={internalStyles.individualchatbox }>
-            <Text style= {styles.centerText}>{matchedPerson}</Text>
-            </TouchableOpacity> 
-            )}) 
-        
-        const normalsettings =  <ScrollView><ImageBackground style={internalStyles.chatbox} >{boxes}</ImageBackground></ScrollView>
 
         return (
             <View style={styles.screen}>
                 
              <Text style={{fontSize:20, margin: 15, color: 'white'}}>Contact</Text>
-             {this.state.dataReady ?  normalsettings: null}
+             {this.state.dataReady? <ScrollView>  
+        <ImageBackground style={internalStyles.chatbox} >
+        {this.state.matchedPeople.map( (matchedPerson) => 
+      {
+        var uriReady = false;
+        var url ='';
+        //firebase.storage().ref("Usersimage/"+matchedPerson).getDownloadURL().then((uri)=> url=uri,uriReady=true,console.log("AAAAAA"+url)).catch((e)=>console.log(e.message));
+        let imageRef= firebase.storage().ref("Usersimage/"+matchedPerson);
+        //url = await imageRef.getDownloadURL();
+        //uriReady = true;
+        imageRef.getDownloadURL().then( (uri)=>{
+            //from url you can fetched the uploaded image easily
+            url =  uri,
+            uriReady = true,
+            console.log("WHYYYYY"+url)
+          }).catch((e) => console.log('getting downloadURL of image error => ', e)); 
+        return(
+        <TouchableOpacity onPress={ ()=>
+        this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
+        style={internalStyles.individualchatbox }>
+        
+        {uriReady==true ? <Image source ={{uri:url}} style={internalStyles.square}  />: <View style={internalStyles.circle } />}   
+        <Text style= {internalStyles.centerText}>{matchedPerson}</Text>
+        </TouchableOpacity> 
+        )}) }
+        </ImageBackground></ScrollView>: null}
              
             </View>
         )
@@ -89,19 +110,40 @@ const internalStyles= StyleSheet.create({
         borderRadius:10,
         backgroundColor: 'red',
         width: win.width/1.05,
-        height: win.height/1.25
+        height: win.height/1.25,
+        padding: 10
     },
     individualchatbox:{
+        flexDirection:'row',
         backgroundColor: '#F7F7FF',
         borderRadius: 5,
         elevation: 10,
-        height: 40,
+        height: 60,
+        alignItems: "center",
         textAlign: 'center',
-        justifyContent: 'center',
         margin: 10,
         width: win.width/1.2,
 
     },
+    circle:{
+    height:55,
+    width: 55,
+    borderRadius: 20,
+    margin: 5,
+    backgroundColor: 'black'
+
+    },
+    square:{
+    height:55,
+    width: 55,
+    backgroundColor: 'yellow'
+
+    },
+    centerText:{
+        textAlign: 'center',
+        fontSize: 20,
+        
+    }
 
 })
 

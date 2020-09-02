@@ -164,7 +164,7 @@ class profileScreen extends React.Component {
                 style={internalStyles.input}/>
                 <View style ={styles.buttonlengthstyle,{marginVertical:0}}>
                 <Button onPress={() => this.setInformation()} 
-                style = {internalStyles.confirmButton} color = 'red' title="Change Information"/>
+                style = {internalStyles.confirmButton} color = 'red' title="Click to Change Information"/>
                 </View>
                 </View>
                 </View>
@@ -196,17 +196,18 @@ const internalStyles = StyleSheet.create({
       height: win.width/1.3,
       borderRadius: win.width/2/1.3,
       backgroundColor: '#f0ffff',
-      marginTop:10,
-      marginBottom: 10
+      marginBottom: 35,
+      marginBottom: 5
+      
     },
     confirmButton:{
+      margin:30,
       color: 'white' ,
       fontSize: 30,
-      margin:10
     },
     input:{
       padding: 8,
-      marginBottom: 5,
+      marginBottom: 10,
       backgroundColor: '#DBDBD9',
     },
     buttonlengthstyle:{
