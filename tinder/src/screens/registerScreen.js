@@ -10,7 +10,7 @@ export default class registerScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'kinwaitoissac@gmail.com',
+      email: '',
       password: 'aA1!aA1!',
       confirmPassword: 'aA1!aA1!',
       confirmationCode: '',
@@ -46,16 +46,14 @@ export default class registerScreen extends React.Component {
   }
   handleConfirmationCode = () => {
     const { email, confirmationCode } = this.state;
-
-    
     Auth.confirmSignUp(email,confirmationCode)
       .then(() => {
       var timeRegistered = new Date().getSeconds();
-      var name = email.split(".")[0]
+      var name= email.split(".")[0].split('@')[0]
       console.log(name)
       var userRef = firebase.database().ref("users/"  + name);
       //set up the account for the person
-      userRef.set({username: email, 
+      userRef.set({username: name, 
         registeredtime:timeRegistered, 
         peopleNotSwiped:{}, 
         peopleSwiped:{}});
@@ -72,13 +70,13 @@ export default class registerScreen extends React.Component {
         snapshot.forEach(function(child) {
           if (child.key !== name){
             firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name});
+
           }
           console.log(child.key);
         });
       }
       );
-      
-      store.dispatch(updateAuth({loggedin: true}));
+      store.dispatch(updateAuth({loggedin: true, name: name }));
         
       })
       .catch(err => console.log(err));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text,Button,TextInput, TouchableOpacity, Image, View, StyleSheet, Dimensions } from 'react-native';
+import { Text,Button,TextInput,Alert, TouchableOpacity, Image, View, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from '../firebase.js';
 import ImagePicker from 'react-native-image-picker';
@@ -7,18 +7,19 @@ import ImagePicker from 'react-native-image-picker';
 
 import { styles } from '../styles';
 
+var nameForPress ='';
 class profileScreen extends React.Component {
     constructor(props) {
         //constructor to set default state
         super(props);
         //set last inputed information
         this.setupPreviousInformation();
-
+        nameForPress = this.props.name;
         };
          state = {
           isImageReady: false,
           profileImageUrl: null,
-          username: "abcd",
+          username: this.props.name,
           year: "",
           age:"",
           major:"",
@@ -36,10 +37,12 @@ class profileScreen extends React.Component {
       this.setState({profileImageUrl: location});
     }
 
-    setInformation() {
-      if(this.state.username!=='' && this.state.age!==''&& this.state.year!=='' && this.state.major!=='')
-        {firebase.database().ref('users/' + this.state.username).set({
-        Username: this.state.username,
+    setInformation (){
+      console.log(nameForPress);
+      var name =nameForPress;
+      if(this.state.age!==''&& this.state.year!=='' && this.state.major!=='')
+        {firebase.database().ref('users/' + name).set({
+        Username: name,
         Age: this.state.age,
         Year: this.state.year,
         Major: this.state.major});
@@ -50,7 +53,8 @@ class profileScreen extends React.Component {
     }
 
     setupPreviousInformation() {
-      console.log(this.state.username);
+      var something = this.state.username
+      console.log(something)
       firebase.database().ref('users/' + this.state.username).once('value', (snapshot) => {
         if (snapshot.exists()){
           var Username = snapshot.val().Username;
@@ -159,7 +163,7 @@ class profileScreen extends React.Component {
                 placeholder={'Major'}
                 style={internalStyles.input}/>
                 <View style ={styles.buttonlengthstyle,{marginVertical:0}}>
-                <Button onPress={()=> this.setInformation()}
+                <Button onPress={() => this.setInformation()} 
                 style = {internalStyles.confirmButton} color = 'red' title="Change Information"/>
                 </View>
                 </View>
@@ -167,24 +171,6 @@ class profileScreen extends React.Component {
             </View>
       );
     }
-    /*
-    getAndLoadHttpUrl = async ()=> {
-        const ref = Firebase.storage().ref(this.state.username);
-        const url = await ref.getDownloadURL();
-        ref.getDownloadURL().then(data => {
-           this.setState({ profileImageUrl: data })
-           if(this.state.profileImageUrl==null){
-           this.setState({ isImageReady: true })
-           }
-        }
-       )
-       let imageRef = Firebase.storage().ref('/' + this.state.username);
-        imageRef.getDownloadURL().then((url) => {
-            //from url you can fetched the uploaded image easily
-            this.setState({profileImageUrl: url});
-          }).catch((e) => console.log('getting downloadURL of image error => ', e));
-        this.setState({ isImageReady: true })
-        } */
 
 }
 

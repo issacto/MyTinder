@@ -7,30 +7,35 @@ import { connect } from 'react-redux';
 
 import { updateAuth, updateSettings } from '../redux/action';
 import { store } from '../redux/store';
-import chatScreen from '../screens/chatScreen';
-import contactScreen from '../screens/contactScreen';
+import InternalChatScreen from '../screens/chatScreen';
+import ContactScreen from '../screens/contactScreen';
 import loginScreen from '../screens/loginScreen';
-import profileScreen from '../screens/profileScreen';
+import ProfileScreen from '../screens/profileScreen';
 import registerScreen from '../screens/registerScreen';
 import resetPasswordScreen from '../screens/resetPasswordScreen.js';
 import settingsScreen from '../screens/settingsScreen';
-import swipeScreen from '../screens/swipeScreen';
+import SwipeScreen from '../screens/swipeScreen';
 import { accent, bgRootcolor, bgColor, black, defaultStyles } from '../styles'
 
 const Chat = createStackNavigator();
 const Root = createStackNavigator();
 const Main = createBottomTabNavigator();
+var realname = '';
 
-const chat = () => {
+const ChatScreen = () => {
     return (
         <Chat.Navigator screenOptions={{ headerShown: false }}>
-            <Chat.Screen name='Contacts' component={contactScreen} />
-            <Chat.Screen name='Chat' component={chatScreen} />
+            <Chat.Screen name='Contacts'>
+            {props => <ContactScreen {...props} name={realname} />}
+            </Chat.Screen>
+            <Chat.Screen name='Chat'>
+            {props => <InternalChatScreen {...props} name={realname} />}
+            </Chat.Screen>
         </Chat.Navigator>
     )
 }
 
-const main = () => {
+const MainScreen =()=> {
     return (
         <Main.Navigator
             initialRouteName={'Chat'}
@@ -64,9 +69,14 @@ const main = () => {
                 showLabel: false,
             }}
         >
-            <Main.Screen name='Profile' component={profileScreen} />
-            <Main.Screen name='Swipe' component={swipeScreen} />
-            <Main.Screen name='Chat' component={chat} />
+
+            <Main.Screen name='Profile' >
+            {props => <ProfileScreen {...props} name={realname} />}
+            </Main.Screen>
+            <Main.Screen name='Swipe' >
+            {props => <SwipeScreen {...props} name={realname} />}
+            </Main.Screen>
+            <Main.Screen name='Chat' component={ChatScreen} />
             <Main.Screen name='Settings' component={settingsScreen} />
         </Main.Navigator>
     )
@@ -88,19 +98,21 @@ class AppNav extends React.Component {
     }
 
     render() {
+        realname = this.props.auth.name;
         return (
             <NavigationContainer>
                 <Root.Navigator screenOptions={{ headerShown: false }}>
                     {
                         !this.props.auth.loggedin ? (
                             <>
+                                
                                 <Root.Screen name='Login' component={loginScreen} />
                                 <Root.Screen name='Register' component={registerScreen} />
                                 <Root.Screen name= 'ResetPassword' component={resetPasswordScreen} />
                                 
                             </>
                         ) : (
-                                <Root.Screen name='Main' component={main} />
+                            <Root.Screen name= 'Main' component={MainScreen} />
                             )
                     }
                 </Root.Navigator>

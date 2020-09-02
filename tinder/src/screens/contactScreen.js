@@ -17,9 +17,10 @@ class contactScreen extends React.Component {
         }
 
         state = {
-            email: "tototototoman@gmail",
+            
             matchedPeople: [],
             dataReady: false,
+            email:this.props.name
          };
 
         getPeople ()  {
@@ -53,12 +54,17 @@ class contactScreen extends React.Component {
     
     
     render() {
+        console.log("HEREHERE"+ this.state.email)
+
+        /*const { name } = this.props.route.params;
+        this.state.email = name;  
+        console.log("bhuvgyccv"+this.state.email)*/
         {console.log(this.state.matchedPeople)}
         const boxes = this.state.matchedPeople.map((matchedPerson) => 
         {
             return(
             <TouchableOpacity onPress={ ()=>
-            this.props.navigation.navigate('Chat')}
+            this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
             style={internalStyles.individualchatbox }>
             <Text style= {styles.centerText}>{matchedPerson}</Text>
             </TouchableOpacity> 

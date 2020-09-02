@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, TextInput, View } from 'react-native';
+import { Text, TouchableOpacity,Alert, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { updateAuth } from '../redux/action';
@@ -13,17 +13,21 @@ class loginScreen extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''}}
+            password: '',}}
 
     handleSignIn = () => {
-    const { email, password } = this.state;
+    const { email, password, } = this.state;
+    var name ='';
     console.log(email + password);
+    if(this.state.email.includes("@")&& this.state.email.includes(".")){
+        name = this.state.email.split(".")[0].split('@')[0]
+        console.log("habfibaihfbeiabfi"+name)
+    }
     Auth.signIn(email,password)
-        // If we are successful, navigate to Home screen
-        //user => this.props.navigation.navigate('Register')
-        .then(user=>store.dispatch(updateAuth({loggedin: true})))
+        .then(  user=>   
+        store.dispatch(updateAuth({loggedin: true, name:name })))
         // On failure, display error in console
-        .catch(err => console.log(err));
+        .catch(err => Alert.alert("Wrong Username/Password"));
     }
 
     render() {

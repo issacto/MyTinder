@@ -1,17 +1,25 @@
 import { GiftedChat } from 'react-native-gifted-chat';
 import React from 'react';
-import { TouchableOpacity,View} from 'react-native';
+import { TouchableOpacity,View,Text} from 'react-native';
 import { connect } from 'react-redux';
 import firebase from '../firebase.js';
 import { styles } from '../styles';
 
+
 class chatScreen extends React.Component {
+  
     constructor(props) {
         super(props);
-        this.state = {messages: []};
+        this.state = {
+          messages: [],
+          email: '',
+          othersEmail: ''
+          //''otherUsername
+        };
         this.onSend = this.onSend.bind(this);
         // pass id here
       }
+       
       timestamp = Date.now()
       ref = firebase.database().ref('Chat/'+'id1_id2'/*set chat id here + make algo to see which one first id1_id2 or id2_id1*/);
     
@@ -22,16 +30,18 @@ class chatScreen extends React.Component {
       }
       
       render() {
+        const { yourUsername,otherUsername } = this.props.route.params;
+        this.state.email = yourUsername;  
+        console.log("bhuvgyccv"+this.state.email)
+        this.state.othersEmail = otherUsername;  
         return (
-            
           <GiftedChat
             messages={this.state.messages}
             onSend={this.send}
             
             user={{
-            name:"Linag"/*set name here*/,
-            avatar:'/Users/issac/Documents/GitHub/KCLSocial/kcltinder/Images/kings.jpg'/*set image here*/,
-            _id: 1, /*set id here*/
+            name: this.state.email/*set name here*/,
+            _id:this.state.email,
             createdAt:  new Date(),
             
             }}

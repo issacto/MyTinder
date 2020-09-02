@@ -47,7 +47,7 @@ export default class Swipe extends Component{
   }
     state = {
       currentIndex: 0,
-      email:"tototototoman@gmail",
+      email:this.props.name,
       data: [],
       uriReady:false,
       swipedEmail:''

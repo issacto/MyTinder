@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { UPDATE_AUTH, UPDATE_SETTINGS } from './action';
+import { UPDATE_AUTH, UPDATE_SETTINGS,UPDATE_EMAIL } from './action';
 
-const updateAuth = (auth = { loggedin: false }, action) => {
+const updateAuth = (auth = { loggedin: false, name:'' }, action) => {
     if (action.type === UPDATE_AUTH) return action.payload
     return auth
 }

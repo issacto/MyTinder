@@ -7,13 +7,19 @@ import { styles } from '../styles';
 const win = Dimensions.get('window');
 
 class swipeScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log("HIIIIIIIIIIII"+this.props.name);
+        
+        
+        };
 
     render() {
         return (
             <View style={styles.screen}>
                 <Text style={{fontSize:20, margin: 15, color: 'white'}}>Match</Text>
                 <ImageBackground style={internalStyles.backgroundImage} >
-                <Swipe/>
+                <Swipe name={this.props.name}/>
                 </ImageBackground>
             </View>
         )
