@@ -85,6 +85,7 @@ export default class Swipe extends Component{
           
               async geturi(name1) {
                 var isDone = false;
+                
                 try{
 
                   let url = await firebase.storage().ref("Usersimage/"+name1).getDownloadURL();
@@ -95,6 +96,7 @@ export default class Swipe extends Component{
                       
                 }catch(e) {console.log('getting downloadURL of image error => ', e.message);
                     if(isDone!==true){
+                    console.log("YO"+name1);
                     let newImageRef = await firebase.storage().ref("Usersimage/"+'background.jpg').getDownloadURL();
                      /*newImageRef.getDownloadURL().then((url) => {
                       console.log('hiaeh riubrifaejbofobebirb;');

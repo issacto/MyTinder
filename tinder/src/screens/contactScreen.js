@@ -9,53 +9,85 @@ import { styles } from '../styles';
 class contactScreen extends React.Component {
     constructor(props) {
         super(props);
-        
+        this.getPeople();
+       
         
         };
-        UNSAFE_componentWillMount(){
-            this.getPeople();
-        }
-
         state = {
             
-            matchedPeople: [],
+            matchedPeople: [ ],
             dataReady: false,
             email:this.props.name,
             uriReady : false,
             tempUrl: '',
             response: null,
+            data: [],
 
 
          };
+        
 
         getPeople ()  {
         var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleMatched');
-        
-        rootRef.once('value', (snapshot) => {
+        rootRef.once('value',  (snapshot) => {
             if (snapshot.exists()){
-                console.log("here")
-            var something = snapshot.val();
-            console.log(something);
-            var somethingiven = Object.values(something)
-            somethingiven.map((abc)=>{
-                var somethinginside = Object.values(abc)[0]
-                var joined = this.state.matchedPeople.concat(somethinginside)
-                this.state.matchedPeople = joined;
-                console.log("dsfgfgs"+this.state.matchedPeople)
+                console.log("here");
+                var something =  snapshot.val();
+                console.log(something);
+                var somethingiven = Object.values(something);
+                console.log(somethingiven);
+                somethingiven.map( async (abc)=>{
+                    let somethinginside =  Object.values(abc)[0];
+                    console.log("HIHIHIHIHIHIHI"+somethinginside);
+                    //this.state.matchedPeople.push(somethinginside);
+                    var joined = [].concat(this.state.matchedPeople, somethinginside);
+                    await this.setState({matchedPeople:joined});
+                    console.log("dsfgfgs"+this.state.matchedPeople);
                 
             });
-            /*
-            something.map((matchedPerson) => (
-                this.state.matchedPeople.push(Object.keys(something)))); */
-            this.setState({dataReady: true})
+        };  this.getdata();}
+        
+            );
             
-            
-            }
-        })
-
         ;
         
     }
+        async getdata(){
+            
+           //await this.getPeople();
+           console.log("just anything");
+            //var list = this.state.matchedPeople
+           console.log("HEYHEYEYHEYHEYHEYH"+this.state.matchedPeople);
+           
+            await Promise.all(this.state.matchedPeople.map(async (person) =>{
+                console.log("HALO"+person)
+                let photoUri = await this.geturi(person);
+                console.log("photourl fakejb bfaeobfaejo: "+ photoUri)
+                var joined = this.state.data.concat([[person, photoUri]]);
+                this.state.data = joined;
+                console.log(this.state.data);
+
+            })).then(()=>{
+            this.setState({dataReady :true});
+            console.log("WHATWHATEWHAT"+this.state.data);})
+        }
+        
+    async geturi(person) {
+        var isDone = false;
+        console.log("YO"+person);
+        try{
+          let url = await firebase.storage().ref("Usersimage/"+person).getDownloadURL();
+          isDone = true;
+          console.log("HERE we GO 1: "+ url);
+          return url;
+              
+        }catch(e) {console.log('getting downloadURL of image error => ', e.message);
+            if(isDone!==true){
+            let newImageRef = await firebase.storage().ref("Usersimage/"+'background.jpg').getDownloadURL();
+            console.log("HERE we GO 2: "+ newImageRef);
+            return newImageRef
+                ;}
+      }  }   
 
     
     
@@ -66,38 +98,25 @@ class contactScreen extends React.Component {
         /*const { name } = this.props.route.params;
         this.state.email = name;  
         console.log("bhuvgyccv"+this.state.email)*/
-        {console.log(this.state.matchedPeople)}
+        {console.log(this.state.data)}
 
         return (
             <View style={styles.screen}>
                 
              <Text style={{fontSize:20, margin: 15, color: 'white'}}>Contact</Text>
-             {this.state.dataReady? <ScrollView>  
-        <ImageBackground style={internalStyles.chatbox} >
-        {this.state.matchedPeople.map( (matchedPerson) => 
-      {
-        var uriReady = false;
-        var url ='';
-        //firebase.storage().ref("Usersimage/"+matchedPerson).getDownloadURL().then((uri)=> url=uri,uriReady=true,console.log("AAAAAA"+url)).catch((e)=>console.log(e.message));
-        let imageRef= firebase.storage().ref("Usersimage/"+matchedPerson);
-        //url = await imageRef.getDownloadURL();
-        //uriReady = true;
-        imageRef.getDownloadURL().then( (uri)=>{
-            //from url you can fetched the uploaded image easily
-            url =  uri,
-            uriReady = true,
-            console.log("WHYYYYY"+url)
-          }).catch((e) => console.log('getting downloadURL of image error => ', e)); 
-        return(
-        <TouchableOpacity onPress={ ()=>
-        this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
-        style={internalStyles.individualchatbox }>
-        
-        {uriReady==true ? <Image source ={{uri:url}} style={internalStyles.square}  />: <View style={internalStyles.circle } />}   
-        <Text style= {internalStyles.centerText}>{matchedPerson}</Text>
-        </TouchableOpacity> 
-        )}) }
-        </ImageBackground></ScrollView>: null}
+              <ScrollView>  
+            <ImageBackground style={internalStyles.chatbox} >
+                {console.log("HI THERE"+this.state.data)}
+            {this.state.dataReady? this.state.data.map( matchedPerson => 
+            
+            <TouchableOpacity onPress={ ()=>
+            this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
+            style={internalStyles.individualchatbox }>
+            <Image source ={{uri:matchedPerson[1]}} style={internalStyles.circle}  />
+            <Text style= {internalStyles.centerText}>{matchedPerson[0]}</Text>
+            </TouchableOpacity> 
+            ) : <View style={internalStyles.square}/>}
+            </ImageBackground></ScrollView>
              
             </View>
         )
