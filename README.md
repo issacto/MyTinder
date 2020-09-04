@@ -11,7 +11,7 @@
 import Amplify from 'aws-amplify';
 Amplify.configure(aws_exports);
 ```
-### In RegistrationScreen.js:
+### In registrationScreen.js:
 ```javascript
 import { Auth } from 'aws-amplify';
 Auth.signUp({
@@ -21,7 +21,9 @@ Auth.signUp({
        })
 ```
 ** Amazon will send a email-verification email attached with a verification code for the user to input on the app
-### In LoginScreen.js:
+
+
+### In loginScreen.js:
 ```javascript
 import { Auth } from 'aws-amplify';
 Auth.signIn(email,password)
@@ -31,7 +33,12 @@ Auth.signIn(email,password)
         .catch(err => Alert.alert("Wrong Username/Password"));
     }
 ```
-
+### resetPasswordScreen.js
+```javascript
+import { Auth } from 'aws-amplify';
+Auth.forgotPasswordSubmit(email, confirmationForgotCode, ForgotGeneratedPassword)
+    .then(xxxx)
+```
 
 ## Google Firebase
 ### Realtime Database:
