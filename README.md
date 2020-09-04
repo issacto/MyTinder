@@ -6,12 +6,12 @@
 
 
 ## Amazon Cognito
-<br>In App.js:
+### In App.js:
 ```javascript
 import Amplify from 'aws-amplify';
 Amplify.configure(aws_exports);
 ```
-### For RegistrationScreen.js:
+### In RegistrationScreen.js:
 ```javascript
 import { Auth } from 'aws-amplify';
 Auth.signUp({
@@ -21,7 +21,7 @@ Auth.signUp({
        })
 ```
 ** Amazon will send a email-verification email attached with a verification code for the user to input on the app
-### For LoginScreen.js:
+### In LoginScreen.js:
 ```javascript
 import { Auth } from 'aws-amplify';
 Auth.signIn(email,password)
