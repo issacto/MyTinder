@@ -6,6 +6,10 @@
 
 
 ## Demonstration
+```
+cd tinder
+react-native run-android
+```
 
 ## Amazon Cognito
 ### In App.js:
