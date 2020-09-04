@@ -110,12 +110,12 @@ class contactScreen extends React.Component {
             {this.state.dataReady? this.state.data.map( matchedPerson => 
             
             <TouchableOpacity onPress={ ()=>
-            this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson})}
+            this.props.navigation.navigate('Chat', {yourUsername: this.state.email, otherUsername: matchedPerson[0], avatar : matchedPerson[1]})}
             style={internalStyles.individualchatbox }>
             <Image source ={{uri:matchedPerson[1]}} style={internalStyles.circle}  />
             <Text style= {internalStyles.centerText}>{matchedPerson[0]}</Text>
             </TouchableOpacity> 
-            ) : <View style={internalStyles.square}/>}
+            ) :null}
             </ImageBackground></ScrollView>
              
             </View>

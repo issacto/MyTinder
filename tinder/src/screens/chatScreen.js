@@ -10,30 +10,37 @@ class chatScreen extends React.Component {
   
     constructor(props) {
         super(props);
-        this.state = {
-          messages: [],
-          email: '',
-          othersEmail: ''
-          //''otherUsername
-        };
+        this.component();
+        
         this.onSend = this.onSend.bind(this);
         // pass id here
       }
-       
+      state = {
+        messages: [],
+        email: this.props.route.params.yourUsername,
+        othersEmail: this.props.route.params.otherUsername,
+        othersAvatar: this.props.route.params.avatar
+        //''otherUsername
+      };
       timestamp = Date.now()
-      ref = firebase.database().ref('Chat/'+'id1_id2'/*set chat id here + make algo to see which one first id1_id2 or id2_id1*/);
+      geturl(){
+        console.log("MYEMAIL:"+this.state.email);
+        console.log("otehrsemail:"+this.state.othersEmail);
+        if (this.state.email > this.state.othersEmail){
+          return(this.state.email +""+this.state.othersEmail);
+      }else{
+        return(this.state.othersEmail+""+this.state.email);
+      };}
+      ref = firebase.database().ref('Chat/'+this.geturl());
     
-      componentWillMount() {
+      component() {
         this.setState({
           messages: [],
         });
       }
       
       render() {
-        const { yourUsername,otherUsername } = this.props.route.params;
-        this.state.email = yourUsername;  
-        console.log("bhuvgyccv"+this.state.email)
-        this.state.othersEmail = otherUsername;  
+         
         return (
           <GiftedChat
             messages={this.state.messages}
@@ -43,8 +50,11 @@ class chatScreen extends React.Component {
             name: this.state.email/*set name here*/,
             _id:this.state.email,
             createdAt:  new Date(),
+            avatar: this.state.othersAvatar
             
-            }}
+            }
+          }
+
           />
         );
       }
