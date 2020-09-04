@@ -33,7 +33,7 @@ Auth.signIn(email,password)
         .catch(err => Alert.alert("Wrong Username/Password"));
     }
 ```
-### resetPasswordScreen.js
+### In resetPasswordScreen.js
 ```javascript
 import { Auth } from 'aws-amplify';
 Auth.forgotPasswordSubmit(email, confirmationForgotCode, ForgotGeneratedPassword)
