@@ -5,6 +5,12 @@
 <br>Packages/System: Redux, React Native Gifted Chat, ImagePicker
 
 
+## Amazon Cognito
+
+##Google Firebase
+<br>Realtime Database:
+
+<br>Storage:
 
 
 
@@ -14,20 +20,5 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Special thanks to : 
+Special thanks to : Timothy Lo
+Guide: https://www.instamobile.io/react-native-controls/react-native-swipe-cards-tinder/
