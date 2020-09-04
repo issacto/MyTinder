@@ -6,13 +6,37 @@
 
 
 ## Amazon Cognito
+<br>In App.js:
+```javascript
+import Amplify from 'aws-amplify';
+Amplify.configure(aws_exports);
+```
+<br>For RegistrationScreen.js:
+```javascript
+import { Auth } from 'aws-amplify';
+Auth.signUp({
+       username: email,
+       password,
+       attributes: { email },
+       })
+```
+<br>For LoginScreen.js:
+```javascript
+import { Auth } from 'aws-amplify';
+Auth.signIn(email,password)
+        .then(  user=>   
+        store.dispatch(updateAuth({loggedin: true, name:name })))
+        // On failure, display error in console
+        .catch(err => Alert.alert("Wrong Username/Password"));
+    }
+```
 
 
 ## Google Firebase
 ### Realtime Database:
 
 
-<br>Storage:
+### Storage:
 
 
 ## Demonstration:
