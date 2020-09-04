@@ -5,6 +5,8 @@
 <br>Packages/System: Redux, React Native Gifted Chat, ImagePicker
 
 
+## Demonstration:
+
 ## Amazon Cognito
 ### In App.js:
 ```javascript
@@ -55,7 +57,6 @@ import firebase from '../firebase.js';
 firebase.storage().ref("Usersimage/"+this.state.username).put(xxxx);
 ```
 
-## Demonstration:
 
 
 
