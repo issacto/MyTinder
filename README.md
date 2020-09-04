@@ -37,6 +37,7 @@ Auth.signIn(email,password)
 ### Realtime Database:
 ```javascript
 import firebase from '../firebase.js';
+firebase.database().ref('users/' + name).set({xxxx});
 ```
 
 
@@ -44,7 +45,7 @@ import firebase from '../firebase.js';
 
 ```javascript
 import firebase from '../firebase.js';
-firebase.database().ref('users/' + name).set({xxxx});
+firebase.storage().ref("Usersimage/"+this.state.username).put(xxxx);
 ```
 
 ## Demonstration:
