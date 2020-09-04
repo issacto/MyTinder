@@ -66,7 +66,6 @@ class loginScreen extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.defaultBtn}
                 onPress={() => this.props.navigation.navigate('ResetPassword')}
-                //onPress={ this.handleForgotPassword }
                 > 
                 <Text style={styles.centerText}>Fogot Password</Text>
                 </TouchableOpacity>

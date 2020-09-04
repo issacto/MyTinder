@@ -69,7 +69,7 @@ export default class registerScreen extends React.Component {
       rootRef.once("value", function(snapshot) {
         snapshot.forEach(function(child) {
           if (child.key !== name){
-            firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name});
+            firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name:child.key});
 
           }
           console.log(child.key);
@@ -123,15 +123,16 @@ export default class registerScreen extends React.Component {
           visible={this.state.modalVisible}
         >
           <View
-            style={internalStyles.container}
+            style={styles.screen}
           >
-            <TextInput
+           <TextInput style={{fontSize:20, color: 'white'}}
               onChangeText={
                 // Set this.state.confirmationCode to the value in this Input box
                 (value) => this.setState({ confirmationCode: value })
                 
               }
               placeholder="confirmationcode"
+              placeholderTextColor="white"
             />
             <TouchableOpacity style={styles.defaultBtn}
               title='Submit'
@@ -145,12 +146,3 @@ export default class registerScreen extends React.Component {
     );
   }
 }
-
-const internalStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

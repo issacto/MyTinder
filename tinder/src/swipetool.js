@@ -1,4 +1,4 @@
-import { StyleSheet,YellowBox , Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import { StyleSheet,YellowBox , Text, View, Dimensions, Image,ImageBackground, Animated, PanResponder } from 'react-native';
 //import data , {usersshow} from './data.js';
 import React, { Component } from 'react';
 import firebase from './firebase.js';
@@ -62,8 +62,10 @@ export default class Swipe extends Component{
               var something =  snapshot.val();
               console.log(something);
               var somethingiven = Object.values(something);
+              console.log(somethingiven);
               await Promise.all( somethingiven.map(async abc =>{
                   var somethinginside = Object.values(abc)[0];
+                  console.log("WTF"+somethinginside);
                   let photoUri = await this.geturi(somethinginside);
                   console.log("photourl fakejb bfaeobfaejo: "+ photoUri)
                   var joined = this.state.data.concat({name: somethinginside, uri: {uri:photoUri }});
@@ -120,8 +122,9 @@ export default class Swipe extends Component{
         return null;
       } else if (i == this.state.currentIndex) {
         console.log('y');
+        console.log(this.state.data);
         this.state.swipedEmail = item.name;
-        console.log(this.state.swipedEmail );
+        console.log("WHATSUP"+this.state.swipedEmail );
         return (
           <Animated.View
           {...this.PanResponder.panHandlers}
@@ -151,7 +154,7 @@ export default class Swipe extends Component{
                       borderWidth: 1,
                       borderColor: "green",
                       color: "green",
-                      fontSize: 32,
+                      fontSize: 42,
                       fontWeight: "800",
                       padding: 10
                   }}
@@ -175,7 +178,7 @@ export default class Swipe extends Component{
                       borderWidth: 1,
                       borderColor: "red",
                       color: "red",
-                      fontSize: 32,
+                      fontSize: 42,
                       fontWeight: "800",
                       padding: 10
                   }}
@@ -183,7 +186,7 @@ export default class Swipe extends Component{
                   NOPE
                   </Text>
               </Animated.View>
-          <Image
+          <ImageBackground
           style={{
               flex: 1,
               height: null,
@@ -192,7 +195,21 @@ export default class Swipe extends Component{
               borderRadius: 20
           }}
           source={item.uri}
-          />
+          >
+            <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'white',
+              fontSize: 20,
+              position: 'absolute', // child
+              bottom: 10, // position where you want
+              left: 0
+            }}
+          >
+           {item.name}
+          </Text>
+
+            </ImageBackground>
       </Animated.View>);
       }else {
         return (
@@ -203,7 +220,7 @@ export default class Swipe extends Component{
               height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
               }]
           }>
-            <Image
+            <ImageBackground
               style={{
                 flex: 1,
                 height: null,
@@ -211,8 +228,22 @@ export default class Swipe extends Component{
                 resizeMode: "cover",
                 borderRadius: 20
               }}
-              source={item.uri}
-            />
+              source={item.uri}>
+                <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: 'white',
+                  fontSize: 20,
+                  position: 'absolute', // child
+                  bottom: 10, // position where you want
+                  left: 0
+                }}>
+                {item.name}
+              </Text>
+
+
+
+            </ImageBackground>
           </Animated.View>
         );
       }

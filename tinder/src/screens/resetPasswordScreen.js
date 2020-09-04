@@ -12,7 +12,7 @@ export default class resetPasswordScreen extends React.Component {
       email: '',
       forgotModalVisible: false,
       confirmationForgotCode:'',
-      ForgotGeneratedPpassword:''
+      ForgotGeneratedPassword:''
     };
   }
 
@@ -25,8 +25,8 @@ export default class resetPasswordScreen extends React.Component {
   }
 
   handleConfirmedForgotPassword =() =>{
-    const { email, confirmationForgotCode, ForgotGeneratedPpassword } = this.state;
-    Auth.forgotPasswordSubmit(email, confirmationForgotCode, ForgotGeneratedPpassword)
+    const { email, confirmationForgotCode, ForgotGeneratedPassword } = this.state;
+    Auth.forgotPasswordSubmit(email, confirmationForgotCode, ForgotGeneratedPassword)
     .then(this.setState({forgotModalVisible: false}), this.props.navigation.navigate('Login'))
     .catch(err => console.log(err));
   }
@@ -71,7 +71,7 @@ export default class resetPasswordScreen extends React.Component {
             <TextInput style={{fontSize:20, color: 'white'}}
               onChangeText={
                 // Set this.state.confirmationCode to the value in this Input box
-                (value) => this.setState({ ForgotGeneratedPpassword: value })
+                (value) => this.setState({ ForgotGeneratedPassword: value })
                 
               }
               placeholder="new password"

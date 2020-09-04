@@ -9,17 +9,21 @@ import { styles } from '../styles';
 class chatScreen extends React.Component {
   
     constructor(props) {
+      
         super(props);
         this.component();
+        this.getAvatar(this.props.route.params.yourUsername);
         
         this.onSend = this.onSend.bind(this);
         // pass id here
       }
+
       state = {
         messages: [],
         email: this.props.route.params.yourUsername,
         othersEmail: this.props.route.params.otherUsername,
-        othersAvatar: this.props.route.params.avatar
+        othersAvatar: this.props.route.params.avatar,
+        myAvatar: '',
         //''otherUsername
       };
       timestamp = Date.now()
@@ -33,6 +37,24 @@ class chatScreen extends React.Component {
       };}
       ref = firebase.database().ref('Chat/'+this.geturl());
     
+      async getAvatar(myName){
+        var isDone= false;
+        try{
+          let url = await firebase.storage().ref("Usersimage/"+myName).getDownloadURL();
+          isDone = true;
+          console.log("HERE we GO 1: "+ url);
+          this.setState({myAvatar:url})
+          //return url;
+              
+        }catch(e) {console.log('getting downloadURL of image error => ', e.message);
+            if(isDone!==true){
+            let newImageRef = await firebase.storage().ref("Usersimage/"+'background.jpg').getDownloadURL();
+            console.log("HERE we GO 2: "+ newImageRef);
+            this.setState({myAvatar:url})
+            //return newImageRef
+                ;}
+
+      }}
       component() {
         this.setState({
           messages: [],
@@ -50,7 +72,7 @@ class chatScreen extends React.Component {
             name: this.state.email/*set name here*/,
             _id:this.state.email,
             createdAt:  new Date(),
-            avatar: this.state.othersAvatar
+            avatar:this.state.myAvatar
             
             }
           }
