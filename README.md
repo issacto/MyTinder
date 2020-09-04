@@ -60,4 +60,4 @@ firebase.storage().ref("Usersimage/"+this.state.username).put(xxxx);
 
 
 Special thanks to : Timothy Lo
-<br>Guide: https://www.instamobile.io/react-native-controls/react-native-swipe-cards-tinder/
+<br>Guide for swipetool.js: https://www.instamobile.io/react-native-controls/react-native-swipe-cards-tinder/
