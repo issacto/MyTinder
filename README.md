@@ -20,6 +20,7 @@ Auth.signUp({
        attributes: { email },
        })
 ```
+** Amazon will send a email-verification email attached with a verification code for the user to input on the app
 <br>For LoginScreen.js:
 ```javascript
 import { Auth } from 'aws-amplify';
@@ -34,10 +35,16 @@ Auth.signIn(email,password)
 
 ## Google Firebase
 ### Realtime Database:
+```javascript
+
+```
 
 
 ### Storage:
 
+```javascript
+
+```
 
 ## Demonstration:
 
