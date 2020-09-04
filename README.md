@@ -36,14 +36,15 @@ Auth.signIn(email,password)
 ## Google Firebase
 ### Realtime Database:
 ```javascript
-
+import firebase from '../firebase.js';
 ```
 
 
 ### Storage:
 
 ```javascript
-
+import firebase from '../firebase.js';
+firebase.database().ref('users/' + name).set({xxxx});
 ```
 
 ## Demonstration:
