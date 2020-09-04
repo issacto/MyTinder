@@ -5,7 +5,7 @@
 <br>Packages/System: Redux, React Native Gifted Chat, ImagePicker
 
 
-## Demonstration:
+## Demonstration
 
 ## Amazon Cognito
 ### In App.js:
