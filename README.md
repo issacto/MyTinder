@@ -5,7 +5,7 @@
 <br>Packages/System: Redux, React Native Gifted Chat, ImagePicker
 
 
-## Introduction
+## Demonstration
 ```
 cd tinder
 react-native run-android
@@ -14,7 +14,10 @@ react-native run-android
 ### LoginScreen
 
 <p align="center">
-<img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="400">
+<div align="center">
+  <a href='https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/LoginScreen.png" width ='400'></a>
+</div>
+
 </p>
 <br>
 
@@ -33,11 +36,7 @@ react-native run-android
 <br>
 
 
-### Demonstration
 
-<div align="center">
-  <a href='https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/LoginScreen.png"></a>
-</div>
 
 ## Amazon Cognito
 ### In App.js:
