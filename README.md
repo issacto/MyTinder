@@ -11,6 +11,10 @@ cd tinder
 react-native run-android
 ```
 
+<p align="center">
+<img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="300">
+</p>
+
 ## Amazon Cognito
 ### In App.js:
 ```javascript
