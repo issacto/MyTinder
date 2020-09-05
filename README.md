@@ -51,6 +51,11 @@ Auth.signUp({
        })
 ```
 ** Amazon will send a email-verification email attached with a verification code for the user to input on the app
+<p align="center">
+<img src='https://github.com/issacto/mytinder/blob/master/Verification.png' width="200">
+</p>
+<br>
+
 
 
 ### In loginScreen.js:
