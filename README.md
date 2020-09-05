@@ -11,21 +11,21 @@ cd tinder
 react-native run-android
 ```
 
-###LoginScreen
+### LoginScreen
 
 <p align="center">
 <img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="400">
 </p>
 <br>
 
-###ProfileScreen
+### ProfileScreen
 
 <p align="center">
 <img src='https://github.com/issacto/mytinder/blob/master/ProfilePage.png' width="400">
 </p>
 <br>
 
-##MatchedScreen
+### MatchedScreen
 
 <p align="center">
 <img src='https://github.com/issacto/mytinder/blob/master/MatchedScreen.png' width="400">
