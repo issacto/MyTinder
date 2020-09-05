@@ -53,7 +53,7 @@ Auth.signUp({
 ** Amazon will send a email-verification email attached with a verification code for the user to input on the app
 <br>
 <p align="center">
-<img src='https://github.com/issacto/mytinder/blob/master/Verification.png' width="400",height ="400">
+<img src='https://github.com/issacto/mytinder/blob/master/Verification.png' width="600",height ="500">
 </p>
 <br>
 
