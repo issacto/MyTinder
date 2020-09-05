@@ -36,7 +36,7 @@ react-native run-android
 ### Demonstration
 
 <div align="center">
-  <a href='https://github.com/issacto/mytinder/blob/master/LoginScreen.png'><img src="https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" alt="IMAGE ALT TEXT"></a>
+  <a href='https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/LoginScreen.png"></a>
 </div>
 
 ## Amazon Cognito
