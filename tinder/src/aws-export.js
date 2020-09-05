@@ -1,11 +1,6 @@
 const config ={
-
     
-
-    identityPoolId: xxxx ,
-    region: xxxx,
-    userPoolId: xxxx,
-    userPoolWebClientId:xxxx
+//Confidential
 
 }
 export default config

@@ -11,8 +11,8 @@ export default class registerScreen extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: 'aA1!aA1!',
-      confirmPassword: 'aA1!aA1!',
+      password: '',
+      confirmPassword: '',
       confirmationCode: '',
       modalVisible: false,
     };
@@ -69,7 +69,7 @@ export default class registerScreen extends React.Component {
       rootRef.once("value", function(snapshot) {
         snapshot.forEach(function(child) {
           if (child.key !== name){
-            firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name:child.key});
+            firebase.database().ref('users/' + child.key +"/peopleNotSwiped").push({name:name});
 
           }
           console.log(child.key);

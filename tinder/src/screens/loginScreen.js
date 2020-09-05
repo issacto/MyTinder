@@ -49,7 +49,8 @@ class loginScreen extends React.Component {
                     (value) => this.setState({ password: value })
                 }
                 placeholder="Password"
-                placeholderTextColor="white" 
+                placeholderTextColor="white"
+                
                 />
                 <TouchableOpacity
                     //onPress={() => store.dispatch(updateAuth({loggedin: true}))}

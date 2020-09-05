@@ -71,8 +71,7 @@ export default class Swipe extends Component{
                   
                   this.setState({data: joined });
                   
-                  console.log(this.state.data)
-                  //console.log("dsfgfgs"+this.geturi(somethinginside));
+                  console.log(this.state.data);
                   
               })).then(users => {console.log("Aegaegaegaeggeaagegeagae"+this.state.data),
               this.setState({uriReady:true})}
@@ -99,11 +98,7 @@ export default class Swipe extends Component{
                     if(isDone!==true){
                     console.log("YO"+name1);
                     let newImageRef = await firebase.storage().ref("Usersimage/"+'background.jpg').getDownloadURL();
-                     /*newImageRef.getDownloadURL().then((url) => {
-                      console.log('hiaeh riubrifaejbofobebirb;');
-                        //from url you can fetched the uploaded image easily
-                        url = 'https://firebasestorage.googleapis.com/v0/b/ulove-903e0.appspot.com/o/Usersimage%2F11.png?alt=media&token=57ba5897-204f-4a8d-a049-1142a73e995f'
-                        return url*/
+                     
                         console.log("HERE we GO 2: "+ newImageRef);
                         return newImageRef
                         ;}
@@ -267,28 +262,7 @@ export default class Swipe extends Component{
                       this.position.setValue({ x: 0, y: 0 })
                     })
                   })
-                //->自己  swiped people 1 , ->1,2Matchedpeople,1 notswiped bye
-                //notswiped bye
-                var rootRef = firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped');
-                rootRef.once('value', (snapshot) => {
-                    if (snapshot.exists()){
-                    var newPeopleNotSwiped = [];
-                    var something = snapshot.val();
-                    console.log(something);
-                    var somethingiven = Object.values(something)
-                    somethingiven.map((abc)=>{
-                        var somethinginside = Object.values(abc)[0]
-                        if(somethinginside!=this.state.swipedEmail){
-                        var joined = newPeopleNotSwiped.concat(somethinginside)
-                        newPeopleNotSwiped = joined;
-                        
-                        }
-                        
-                    });
-                    firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped').set(newPeopleNotSwiped);
-                    console.log("dsfgfgs"+this.state.matchedPeople)
-                  }})
-                //->自己  swiped people 1 
+                
                 var rootRef = firebase.database().ref('users/'+this.state.email +'/peopleNotSwiped');
                 rootRef.once('value', (snapshot) => {
                     if (snapshot.exists()){
