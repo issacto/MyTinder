@@ -35,13 +35,11 @@ react-native run-android
 
 ### Demonstration
 
-<p align="center">
 <iframe width="560" height="315"
 src="https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" 
 frameborder="0" 
 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
 allowfullscreen></iframe>
-</p>
 
 ## Amazon Cognito
 ### In App.js:
