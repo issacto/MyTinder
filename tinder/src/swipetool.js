@@ -54,7 +54,6 @@ export default class Swipe extends Component{
 
    }
           async fetchData(){
-          //firebase.database().ref("users/peopleNotSwiped"  + this.state.email).push({name: "tototototoman@gmail"});
           var rootRef = firebase.database().ref('users/'+this.state.email+'/peopleNotSwiped');
           
           rootRef.once('value',async (snapshot) => {
