@@ -5,7 +5,7 @@
 <br>Packages/System: Redux, React Native Gifted Chat, ImagePicker
 
 
-## Demonstration
+## Introduction
 ```
 cd tinder
 react-native run-android
@@ -33,7 +33,11 @@ react-native run-android
 <br>
 
 
+### Demonstration
 
+<p align="center">
+[![IMAGE ALT TEXT HERE](https://youtu.be/zi8Gf8LrpIc)](https://youtu.be/zi8Gf8LrpIc)
+</p>
 
 ## Amazon Cognito
 ### In App.js:
