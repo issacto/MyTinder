@@ -1,4 +1,4 @@
-# What doesn't kill u makes u - myTinder
+# What doesn't kill u makes u - Tinder
 <br>A simulation app for Tinder
 <br>Front-end: React Native
 <br>Backend: Amazon Cognito, Google Firebase
