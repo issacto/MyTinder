@@ -41,7 +41,7 @@ react-native run-android
 
 <p align="center">
 <div align="center">
-  <a href='https://youtu.be/eDN8cwdbeiI" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/Chat.png" width ='400'></a>
+  <a href='https://www.youtube.com/watch?v=eDN8cwdbeiI" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/Chat.png" width ='400'></a>
 </div>
 
 
