@@ -12,7 +12,7 @@ react-native run-android
 ```
 
 ### LoginScreen
-Click to see demonstration on Youtube!
+(Click to see demonstration on Youtube!)
 
 <p align="center">
 <div align="center">
@@ -36,6 +36,13 @@ Click to see demonstration on Youtube!
 </p>
 <br>
 
+### ChatScreen
+(Click to see demonstration on Youtube!)
+
+<p align="center">
+<div align="center">
+  <a href='https://youtu.be/eDN8cwdbeiI" alt="IMAGE ALT TEXT'><img src="https://github.com/issacto/mytinder/blob/master/Chat.png" width ='400'></a>
+</div>
 
 
 
