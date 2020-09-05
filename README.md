@@ -36,7 +36,11 @@ react-native run-android
 ### Demonstration
 
 <p align="center">
-[![IMAGE ALT TEXT HERE](https://github.com/issacto/mytinder/blob/master/LoginScreen.png)](https://youtu.be/zi8Gf8LrpIc)
+<iframe width="560" height="315"
+src="https://www.youtube.com/watch?v=zi8Gf8LrpIc&feature=youtu.be" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
 </p>
 
 ## Amazon Cognito
