@@ -12,8 +12,10 @@ react-native run-android
 ```
 
 <p align="center">
-<img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="300">
+<img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="400">
+Login
 </p>
+
 
 ## Amazon Cognito
 ### In App.js:
