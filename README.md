@@ -11,10 +11,28 @@ cd tinder
 react-native run-android
 ```
 
+###LoginScreen
+
 <p align="center">
 <img src='https://github.com/issacto/mytinder/blob/master/LoginScreen.png' width="400">
-Login
 </p>
+<br>
+
+###ProfileScreen
+
+<p align="center">
+<img src='https://github.com/issacto/mytinder/blob/master/ProfilePage.png' width="400">
+</p>
+<br>
+
+##MatchedScreen
+
+<p align="center">
+<img src='https://github.com/issacto/mytinder/blob/master/MatchedScreen.png' width="400">
+</p>
+<br>
+
+
 
 
 ## Amazon Cognito
