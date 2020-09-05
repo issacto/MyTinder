@@ -36,7 +36,7 @@ react-native run-android
 ### Demonstration
 
 <p align="center">
-[![IMAGE ALT TEXT HERE](https://github.com/issacto/mytinder/blob/master/LoginScreen.png) width ='400'](https://youtu.be/zi8Gf8LrpIc)
+[![IMAGE ALT TEXT HERE](https://github.com/issacto/mytinder/blob/master/LoginScreen.png)](https://youtu.be/zi8Gf8LrpIc)
 </p>
 
 ## Amazon Cognito
